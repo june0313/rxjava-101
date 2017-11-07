@@ -16,6 +16,11 @@ public class PersonRepository {
         return Observable.from(people);
     }
 
+    // lazy한 Observable 생성하기
+    public Observable<Person> lazyPeople() {
+        return Observable.defer(() -> Observable.from(query("SELECT * FROM PEOPLE")));
+    }
+
     private List<Person> query(String sql) {
         return new ArrayList<>();
     }
