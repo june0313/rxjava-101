@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PersonRepository {
-    List<Person> listPeople() {
+    public List<Person> listPeople() {
         return query("SELECT * FROM PEOPLE");
     }
 
     // collection 을 Observable로!
-    Observable<Person> observablePeople() {
+    public Observable<Person> observablePeople() {
         final List<Person> people = query("SELECT * FROM PEOPLE");
         return Observable.from(people);
     }
