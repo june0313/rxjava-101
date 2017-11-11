@@ -3,6 +3,7 @@ package rxjava.chapter4.collection_to_observable;
 import rx.Observable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class PersonRepository {
@@ -14,6 +15,19 @@ public class PersonRepository {
     public Observable<Person> observablePeople() {
         final List<Person> people = query("SELECT * FROM PEOPLE");
         return Observable.from(people);
+    }
+
+    public Observable<Person> byCreate() {
+        final List<Person> people = query("SELECT * FROM PEOPLE");
+
+        return Observable.create(subscriber -> {
+            Iterator<Person> iterator = people.iterator();
+
+            while (iterator.hasNext()) {
+                subscriber.onNext(iterator.next());
+            }
+            subscriber.onCompleted();
+        });
     }
 
     // lazy한 Observable 생성하기
