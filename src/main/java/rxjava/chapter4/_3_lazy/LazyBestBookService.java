@@ -1,0 +1,26 @@
+package rxjava.chapter4._3_lazy;
+
+import rx.Observable;
+import rxjava.chapter4._1_collection_to_observable.Person;
+
+public class LazyBestBookService {
+    public void bestBookFor(Person person) {
+        recommend(person)
+                .onErrorResumeNext(bestSeller())
+                .map(Book::getTitle)
+                .subscribe(this::display);
+    }
+
+    private void display(String title) {
+        System.out.println(title);
+    }
+
+    private Observable<Book> bestSeller() {
+        return Observable.defer(Observable::empty);
+    }
+
+    private Observable<Book> recommend(Person person) {
+        return Observable.defer(Observable::empty);
+    }
+
+}
